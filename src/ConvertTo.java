@@ -1,27 +1,19 @@
-import java.lang.reflect.Array;
+import java.util.Stack;
 
-public class ConvertToDecimal {
+public class ConvertTo {
+    private static int decimalNumber = 0;
+    private static char[] hexadecimalCharactersArray = new char[]{'a', 'b', 'c', 'd', 'e', 'f'};;
 
-    private int decimalNumber = 0;
-
-    public void fromBinToDec(int binaryNumber){
+    public static int decimalFromBinary(int binaryNumber){
         int binaryNumberArray[] = indexNumberIntoArray(binaryNumber);
 
         for (int i = 0; i < binaryNumberArray.length; i++){
             int indexValue = (int) (binaryNumberArray[i] * (Math.pow(2,i)));
             decimalNumber += indexValue;}
-        System.out.println("Final Number: " + decimalNumber);
+        return decimalNumber;
     }
 
-    private int calculateNumberOfDigits(int binaryNumber){
-        int count = 0;
-        int n = binaryNumber;
-        while (n != 0)
-        {n /= 10; count++;}
-        return count;
-    }
-
-    private int[] indexNumberIntoArray(int aBinaryNumber){
+    private static int[] indexNumberIntoArray(int aBinaryNumber){
         int numberOfDigits = calculateNumberOfDigits(aBinaryNumber);
         int[] NumberArray = new int[numberOfDigits];
         numberOfDigits = 0;
@@ -33,9 +25,16 @@ public class ConvertToDecimal {
         return NumberArray;
     }
 
-    private char[] hexadecimalCharactersArray = {'a','b','c','d','e','f'};
+    private static int calculateNumberOfDigits(int binaryNumber){
+        int count = 0;
+        int n = binaryNumber;
+        while (n != 0)
+        {n /= 10; count++;}
+        return count;
+    }
 
-    public void fromHexToDec(String hexString){
+
+    public static int decimalFromHexadecimal(String hexString){
         char[] characterArray = hexString.toCharArray();
         int[] convertedNumbersArray = new int[hexString.length()];
         int k = 0;
@@ -57,6 +56,27 @@ public class ConvertToDecimal {
         for (int i = 0; i < convertedNumbersArray.length - 1; i++){
             sum += (convertedNumbersArray[i] * Math.pow(16,convertedNumbersArray.length - 1 - i));
         }
-        System.out.println(sum);
+        return sum;
+    }
+
+    public static String binaryFromDecimal(int decimalNumber){
+        Stack binaryDigitStack = new Stack();
+        String binaryNumberString = "";
+        while (decimalNumber > 0){
+            binaryDigitStack.push(decimalNumber % 2);
+            if (decimalNumber % 2 == 1){
+                decimalNumber--;
+            }
+            decimalNumber /= 2;
+        }
+        int size = binaryDigitStack.size();
+        for (int i=0; i<size; i++){
+            binaryNumberString += binaryDigitStack.pop();
+        }
+        return binaryNumberString;
+    }
+
+    public static String hexadecimalFromDecimal(int toConvert) {
+        return "";
     }
 }
